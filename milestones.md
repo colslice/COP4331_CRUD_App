@@ -1,0 +1,4 @@
+- Finish app during the week of 2/2
+- Finish powerpoint slides during the week of 2/9
+- Practice presentation before 2/16
+- Turn in project by 2/16 (ideally before this date)
