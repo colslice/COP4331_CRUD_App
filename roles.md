@@ -5,10 +5,10 @@
 
 ## Frontend Devs
 - Jacob Daleandro
-- Sabrina Nguyen
+- Sabrina Nguyen (@strawbina)
 
 ## API Devs
-- Nolan Engler
+- Nolan Engler (@nolanenn)
 - Rahul Tummuru
 
 ## Database Devs
