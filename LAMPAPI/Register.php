@@ -30,7 +30,7 @@
 				"INSERT INTO Users (FirstName, LastName, Login, Password) VALUES (?, ?, ?, ?)"
 			);
 			
-      $stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
+      		$stmt->bind_param("ssss", $firstName, $lastName, $login, $password);
 			$stmt->execute();
 			returnWithInfo($firstName, $lastName, $stmt->insert_id);
 		
