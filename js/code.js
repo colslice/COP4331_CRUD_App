@@ -1,4 +1,4 @@
-const urlBase = 'http://cop4331project.xyz';
+const urlBase = 'https://cop4331project.xyz';
 const extension = 'php';
 
 let userId = 0;
@@ -183,4 +183,5 @@ function searchColor()
 	}
 	
 }
+
 
