@@ -1,4 +1,4 @@
-const urlBase = 'https://cop4331project.xyz';
+const urlBase = 'https://cop4331project.xyz/LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -183,5 +183,6 @@ function searchColor()
 	}
 	
 }
+
 
 
