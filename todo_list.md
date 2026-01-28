@@ -1,5 +1,6 @@
 # To Do List
 
+- make main branch live
 - Build frontend
 - Create API documentation
 - Create Gantt chart
