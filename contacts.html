@@ -1,46 +1,81 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Contacts</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
-<body onload="initDashboard()">
 
-<div class="dashboard">
+<body onload="initContacts()">
 
-    <h2>Hello, <span id="userName"></span> </h2>
-    <button onclick="logout()">Logout</button>
+    <div class="container">
+        <div class="contacts-page">
 
-    <h3>Add Contact</h3>
-    <input id="cFirst" placeholder="First Name">
-    <input id="cLast" placeholder="Last Name">
-    <input id="cPhone" placeholder="Phone">
-    <input id="cEmail" placeholder="Email">
-    <button onclick="addContact()">Add</button>
+            <!-- HEADER -->
+            <div class="contacts-header">
+                <button class="icon-btn" onclick="openAddModal()">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
 
-    <h3>Your Contacts</h3>
-    <div id="contactList"></div>
+                <input id="searchInput" class="search-bar" placeholder="Search contacts..."
+                    oninput="searchContacts()" />
 
-</div>
+                <button class="icon-btn" onclick="logout()">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </button>
+            </div>
 
-<script src="js/config.js"></script>
-<script src="js/contacts.js"></script>
-<script src="js/ui.js"></script>
+            <!-- CONTACT LIST -->
+            <div id="contactGrid" class="contact-grid"></div>
 
-<script>
-function initDashboard(){
-    let uid = localStorage.getItem("userId");
-    if (!uid) window.location.href = "index.html";
+            <!-- ADD CONTACT PANEL -->
+            <div id="addPanel" class="side-panel left">
+                <button class="panel-close" onclick="closePanels()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="panel-content">
+                    <h2>Add Contact</h2>
+                    <input id="addFirst" placeholder="First Name" oninput="updatePreview()">
+                    <input id="addLast" placeholder="Last Name" oninput="updatePreview()">
+                    <input id="addPhone" placeholder="Phone" oninput="updatePreview()">
+                    <input id="addEmail" placeholder="Email" oninput="updatePreview()">
 
-    document.getElementById("userName").innerText = localStorage.getItem("firstName");
-    loadContacts();
-}
+                    <div id="previewTile" class="contact-tile" style="margin-bottom:20px;">
+                        <div class="initial-circle">AB</div>
+                        <div class="contact-info">
+                            <strong>First Last</strong>
+                            <span>(555) 555-5555</span>
+                            <span>email@example.com</span>
+                        </div>
+                    </div>
 
-function logout(){
-    localStorage.clear();
-    window.location.href = "index.html";
-}
-</script>
+                    <div class="button-row">
+                        <button onclick="submitAdd()">Add Contact</button>
+                        <button class="secondary" onclick="closePanels()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW / EDIT PANEL -->
+            <div id="viewPanel" class="side-panel right">
+                <button class="panel-close" onclick="closePanels()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="panel-content" id="viewPanelContent">
+                    <!-- Dynamic content inserted here by JS -->
+                </div>
+            </div>
+
+            <!-- OVERLAY -->
+            <div id="overlay" class="overlay" onclick="closePanels()"></div>
+
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/contacts.js"></script>
 
 </body>
+
 </html>
