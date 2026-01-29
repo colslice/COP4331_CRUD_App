@@ -1,22 +1,90 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<title>COP 4331 LAMP Stack Demo</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact Manager Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link rel="stylesheet" href="css/styles.css" />
 </head>
+
 <body>
 
-<h1 id="title">COP 4331 LAMP Stack Demo</h1>
+    <div class="container">
+        <div class="split">
+            <div class="left-panel">
+                <div class="form-card">
 
-<div id="loginDiv">
-	<span id="inner-title">PLEASE LOG IN</span>
-	<input type="text" id="loginName" placeholder="Username" /><br />
-	<input type="password" id="loginPassword" placeholder="Password"/><br />
-	<button type="button" id="loginButton" class="buttons" onclick="doLogin();"> Do It </button>
-	<span id="loginResult"></span>
-</div>
+                    <h1>Welcome back!</h1>
+                    <p id="msgBox"></p>
+
+                    <!-- LOGIN FORM -->
+                    <div id="loginSection">
+                        <input id="loginName" placeholder="Username" />
+                        <div class="password-wrapper">
+                            <input id="loginPassword" type="password" placeholder="Password" />
+                            <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('loginPassword', this)"></i>
+                        </div>
+                        <button onclick="doLogin()">Sign In</button>
+                        <p>
+                            Don't have an account?
+                            <a href="#" onclick="showRegister()">Sign up</a>
+                        </p>
+                    </div>
+
+                    <!-- REGISTER FORM -->
+                    <div id="registerSection" style="display:none;">
+                        <input id="regFirst" placeholder="First Name" />
+                        <input id="regLast" placeholder="Last Name" />
+                        <input id="regLogin" placeholder="Username" />
+                        <div class="password-wrapper">
+                            <input id="regPass" type="password" placeholder="Password" />
+                            <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('regPass', this)"></i>
+                        </div>
+                        <button onclick="doRegister()">Create Account</button>
+                        <p>
+                            Already have an account?
+                            <a href="#" onclick="showLogin()">Login</a>
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="right-panel"></div>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+
+    <script>
+        function showRegister() {
+            document.getElementById("loginSection").style.display = "none";
+            document.getElementById("registerSection").style.display = "block";
+            document.getElementById("msgBox").innerText = "";
+        }
+
+        function showLogin() {
+            document.getElementById("loginSection").style.display = "block";
+            document.getElementById("registerSection").style.display = "none";
+            document.getElementById("msgBox").innerText = "";
+        }
+
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            } else {
+                input.type = "password";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            }
+        }
+    </script>
 
 </body>
+
 </html>
