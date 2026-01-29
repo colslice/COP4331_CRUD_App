@@ -1,140 +1,171 @@
-body 
-{
-    background-color: #707070;
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #ccc;
+    /* gray background */
+    padding: 60px;
+    /* constant padding around the container */
+    height: 100vh;
+    /* full viewport height */
+    box-sizing: border-box;
+    /* include padding in height calculation */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#title 
-{
-    font-size: 40px;
+/* Container wraps the entire split panel */
+.container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    /* Instead of fixed width, use relative width and margin */
+    width: calc(100% - 40px);
+    /* 20px gap on left+right */
+    height: calc(100% - 40px);
+    /* 20px gap on top+bottom */
+    margin: 10px;
+    /* creates the gap around all sides */
+    display: flex;
+}
+
+
+/* LOGIN PAGE */
+.split {
+    display: flex;
+    flex: 1;
+    height: auto;
+    /* height controlled by container */
+}
+
+.left-panel {
+    width: 45%;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    /* add some padding */
+}
+
+.form-card {
+    width: 70%;
+    text-align: center;
+    /* CENTER ALL TEXT */
+}
+
+.form-card h1 {
+    font-size: 2rem;
+}
+
+/* INPUT FIELDS */
+input {
     width: 100%;
-    margin: 2% 5%;
-    text-align: center;
-    font-family: 'Ubuntu', sans-serif;
-    color: #FFFFFF;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 }
 
-#loginDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* BUTTON */
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 999px;
+    /* FULL PILL SHAPE */
+    border: none;
+    background: black;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-#loggedInDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* Optional: subtle hover */
+button:hover {
+    opacity: 0.9;
 }
 
-#accessUIDiv
-{
-    font-size: 30px;
-    width: 70%;
-    margin-left: 15%;
-    padding: 25px;
-    background-color: #b2b2b2;
+/* RIGHT PANEL IMAGE */
+.right-panel {
+    width: 55%;
+    background: url('../assets/hero.jpg') center/cover no-repeat;
 }
 
-.buttons
-{
-    font-size: 30px;
-    border-radius: 25px;
-    width: 50%;
-    margin-left: 25%;
-    font-family: 'Ubuntu', sans-serif;
+/* CONTACTS PAGE */
+.dashboard {
+    padding: 2rem;
 }
 
-.buttons:hover{
-    background-color: #00d5124f;
-    color: #FFFFFF;
-    opacity: 50%;
+.contact-card {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 
-#loginName
-{
-	font-size: 30px;
-}
-#loginPassword
-{
-	font-size: 30px;
-}
-#searchText
-{
-	font-size: 30px;
-}
-#colorText
-{
-	font-size: 30px;
+/* Password input + toggle eye */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+    margin: 10px 0;
+    /* move margin here instead of input */
 }
 
-input[type="text"],input[type="password"]{
-    border-radius: 25px;
-    text-align: center;
-    width: 80%;
-    margin-left: 10%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
+.password-wrapper input {
+    margin: 0;
+    /* prevent push-down */
+    padding-right: 12px;
+    /* space for eye (wider so icon fits) */
 }
 
-#inner-title{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+.toggle-eye {
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 1rem;
 }
 
-#loginResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-bottom: 2%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+.toggle-eye:hover {
+    color: #000;
 }
 
-#userName{
-    display: inline-block;
-    width: 80%;
-    margin-left: 10%;
-    text-align: center;
-}
+/* RESPONSIVE: On smaller screens remove right panel and adjust container */
+@media (max-width: 1000px) {
+    body {
+        padding: 20px;
+        align-items: center;
+    }
 
-#logoutButton{
-    width: 20%;
-    margin-left: 40%;
-}
+    .container {
+        width: 100%;
+        border-radius: 12px;
+        box-shadow: none;
+        flex-direction: column;
+    }
 
-select{
-    width: 30%;
-    margin-left: 35%;
-    margin-top: 2%;
-    font-size: 0.75em;
-    font-family: 'Ubuntu', sans-serif;
-}
+    .split {
+        flex-direction: column;
+        height: 100%;
+    }
 
-#colorSearchResult{
-    display: none;
-}
+    .right-panel {
+        display: none;
+    }
 
-#colorAddResult{
-    display: inline-block;
-    font-size: 0.8em;
-    width: 90%;
-    text-align: center;
-    margin-left: 5%;
-    margin-top: 2%;
-    margin-bottom: 1%;
-    font-family: 'Ubuntu', sans-serif;
-    color: #95060a;
+    .left-panel {
+        width: 100%;
+        padding: 0px;
+        min-height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Contacts</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body onload="initDashboard()">
+
+<div class="dashboard">
+
+    <h2>Hello, <span id="userName"></span> </h2>
+    <button onclick="logout()">Logout</button>
+
+    <h3>Add Contact</h3>
+    <input id="cFirst" placeholder="First Name">
+    <input id="cLast" placeholder="Last Name">
+    <input id="cPhone" placeholder="Phone">
+    <input id="cEmail" placeholder="Email">
+    <button onclick="addContact()">Add</button>
+
+    <h3>Your Contacts</h3>
+    <div id="contactList"></div>
+
+</div>
+
+<script src="js/config.js"></script>
+<script src="js/contacts.js"></script>
+<script src="js/ui.js"></script>
+
+<script>
+function initDashboard(){
+    let uid = localStorage.getItem("userId");
+    if (!uid) window.location.href = "index.html";
+
+    document.getElementById("userName").innerText = localStorage.getItem("firstName");
+    loadContacts();
+}
+
+function logout(){
+    localStorage.clear();
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>
