@@ -55,3 +55,5 @@ function doRegister() {
 function showMessage(msg) {
     document.getElementById("msgBox").innerText = msg;
 }
+
+
