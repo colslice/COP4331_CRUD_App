@@ -9,8 +9,8 @@ $lastName  = $inData["lastName"];
 $phone     = $inData["phone"];
 $email     = $inData["email"];
 
-	//$conn = new mysqli("localhost", "project_user", "COP4331", "COP4331");
-	$conn = new mysqli("localhost", "root", "", "COP4331");
+	$conn = new mysqli("localhost", "project_user", "COP4331", "COP4331");
+	// $conn = new mysqli("localhost", "root", "", "COP4331");
 
 if($conn->connect_error){
   
