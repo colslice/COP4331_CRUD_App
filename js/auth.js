@@ -19,6 +19,7 @@ function doLogin() {
             window.location.href = "contacts.html";
         }
     });
+
 }
 
 function doRegister() {
