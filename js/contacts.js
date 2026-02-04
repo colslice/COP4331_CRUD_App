@@ -59,6 +59,7 @@ function renderContacts() {
    PANELS
 ========================= */
 function openAddModal() {
+    resetAddForm(); //clear form when open every time
     document.getElementById("addPanel").classList.add("open");
     showOverlay();
 }
@@ -116,6 +117,7 @@ function submitAdd() {
             userId: localStorage.getItem("userId")
         })
     }).then(() => {
+        resetAddForm(); //reset the preview and form
         closePanels();
         searchContacts();
     });
@@ -184,18 +186,38 @@ function formatPhone(phone) {
     return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
 }
 
+
+//function keeps a live preview of the contact form
 function updatePreview() {
+    //shows user's input or default values
     const first = addFirst.value || "First";
     const last = addLast.value || "Last";
     const phone = formatPhone(addPhone.value || "5555555555");
     const email = addEmail.value || "email@example.com";
 
+    //update the circle with name initials
     document.querySelector("#previewTile .initial-circle").innerText =
         first[0] + last[0];
 
+    //update name title in the preview card
     document.querySelector("#previewTile strong").innerText =
         `${first} ${last}`;
 
+    //update phone number and email in the preview card
     document.querySelector("#previewTile span:nth-child(2)").innerText = phone;
     document.querySelector("#previewTile span:nth-child(3)").innerText = email;
+}
+
+
+
+//function resets inputs and preview card in the contact form after adding
+function resetAddForm() {
+    //clear inputs
+    addFirst.value = "";
+    addLast.value = "";
+    addPhone.value = "";
+    addEmail.value = "";
+
+    //reset preview card
+    updatePreview();
 }
