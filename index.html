@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Contact Manager Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/auth.css" />
 </head>
 
 <body>
@@ -16,39 +16,78 @@
             <div class="left-panel">
                 <div class="form-card">
 
-                    <h1>Welcome back!</h1>
                     <p id="msgBox"></p>
 
                     <!-- LOGIN FORM -->
                     <div id="loginSection">
-                        <input id="loginName" placeholder="Username" />
-                        <div class="password-wrapper">
-                            <input id="loginPassword" type="password" placeholder="Password" />
-                            <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('loginPassword', this)"></i>
+                        <h1 class="form-title">Sign In </h1>
+
+                        <div class="field">
+                            <label>Username</label>
+                            <input id="loginName" placeholder="eg.JohnDoe" />
                         </div>
+
+                        <div class="field">
+                            <label>Password</label>
+                            <div class="password-wrapper">
+                                <input id="loginPassword" type="password" placeholder="Enter your password" />
+                                <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('loginPassword', this)"></i>
+                            </div>
+                        </div>
+
                         <button onclick="doLogin()">Sign In</button>
-                        <p>
+
+                        <p class="switch-login-text">
                             Don't have an account?
                             <a href="#" onclick="showRegister()">Sign up</a>
                         </p>
                     </div>
 
+
+
                     <!-- REGISTER FORM -->
                     <div id="registerSection" style="display:none;">
-                        <input id="regFirst" placeholder="First Name" />
-                        <input id="regLast" placeholder="Last Name" />
-                        <input id="regLogin" placeholder="Username" />
-                        <div class="password-wrapper">
-                            <input id="regPass" type="password" placeholder="Password" />
-                            <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('regPass', this)"></i>
+                        <h1 class="form-title">Create Account</h1>
+
+                        <div class="name-row">
+                            <div class="field">
+                                <label>First Name</label>
+                                <input id="regFirst" placeholder="eg. John" />
+                            </div>
+
+                            <div class="field">
+                                <label>Last Name</label>
+                                <input id="regLast" placeholder="eg. Doe" />
+                            </div>
                         </div>
-                        <button onclick="doRegister()">Create Account</button>
-                        <p>
+
+                        <div class="field">
+                            <label>Username</label>
+                            <input id="regLogin" placeholder="eg.JohnDoe" />
+                        </div>
+
+                        <div class="field">
+                            <label>Password</label>
+                            <div class="password-wrapper">
+                                <input
+                                        id="regPass"
+                                        type="password"
+                                        minlength="6"
+                                        placeholder="Password"
+                                        required
+                                />
+                                <i class="fa-solid fa-eye-slash toggle-eye" onclick="togglePassword('regPass', this)"></i>
+                            </div>
+                            <small class="pass-helper">Must be at least 6 characters</small>
+                        </div>
+
+                        <button onclick="doRegister()">Get Started</button>
+
+                        <p class="switch-login-text">
                             Already have an account?
-                            <a href="#" onclick="showLogin()">Login</a>
+                            <a href="#" onclick="showLogin()">Log in</a>
                         </p>
                     </div>
-
                 </div>
             </div>
             <div class="right-panel"></div>
