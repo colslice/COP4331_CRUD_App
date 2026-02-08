@@ -108,6 +108,12 @@ input::placeholder {
     margin-top: 3px;
 }
 
+#msgBox {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    color: #c62828;
+}
+
 .switch-login-text {
     text-align: center;
     color: #797575;
