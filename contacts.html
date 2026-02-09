@@ -2,38 +2,101 @@
 <html>
 
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Contacts</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/contacts.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body onload="initContacts()">
+    <div class="app-shell">
 
-    <div class="container">
-        <div class="contacts-page">
-
-            <!-- HEADER -->
-            <div class="contacts-header">
-                <button class="icon-btn" onclick="openAddModal()">
-                    <i class="fa-solid fa-plus"></i>
-                </button>
-
-                <input id="searchInput" class="search-bar" placeholder="Search contacts..."
-                    oninput="searchContacts()" />
-
-                <button class="icon-btn" onclick="logout()">
-                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+        <!-- left sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <button class="nav-logo" aria-label="Logo">
+                    <img src="assets/lightlogo.png" alt="App logo light" class="logo-dark">
+                    <img src="assets/darklogo.png" alt="App logo dark" class="logo-light">
                 </button>
             </div>
 
-            <!-- CONTACT LIST -->
-            <div id="contactGrid" class="contact-grid"></div>
+            <nav class="sidebar-nav">
+                <button class="nav-icon active" aria-label="Home">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
+                        <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
+                    </svg>
+                </button>
 
-            <!-- ADD CONTACT PANEL -->
+                <button class="nav-icon" aria-label="Bookmarks">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                    </svg>
+                </button>
+
+                <button class="nav-icon add-btn" aria-label="Add contact" onclick="openAddModal()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                    </svg>
+                </button>
+            </nav>
+
+            <div class="sidebar-name">
+                <div class="user-pill" title="Username">Username</div>
+            </div>
+        </aside>
+
+
+        <!--main -->
+        <main class="main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <h1 class="page-title">Contacts</h1>
+                    <div class="page-subtitle" id="contactsCount">0 of 0 contacts</div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- toggle for theme(light or dark) -->
+                    <button class="chip-btn theme-toggle" type="button" aria-label="Toggle theme" onclick="toggleTheme()">
+                        <!-- sun -->
+                        <svg class="theme-icon sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708"/>
+                        </svg>
+
+                        <!-- moon -->
+                        <svg class="theme-icon moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286"/>
+                        </svg>
+                    </button>
+
+                    <!-- search bar -->
+                    <div class="search-wrap">
+                        <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+
+                        <input id="searchInput" class="search-input" placeholder="search contact" oninput="searchContacts()"/>
+
+                    </div>
+
+                    <!-- logout button -->
+                    <button class="chip-btn" type="button" aria-label="Logout" onclick="logout()">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- contact grid -->
+            <section class="content">
+                <div id="contactGrid" class="contact-grid"></div>
+            </section>
+
+            <!-- add contact panel -->
             <div id="addPanel" class="side-panel left">
                 <button class="panel-close" onclick="closePanels()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
+
                 <div class="panel-content">
                     <h2>Add Contact</h2>
                     <input id="addFirst" placeholder="First Name" oninput="updatePreview()">
@@ -57,7 +120,7 @@
                 </div>
             </div>
 
-            <!-- VIEW / EDIT PANEL -->
+            <!-- view and edit panel -->
             <div id="viewPanel" class="side-panel right">
                 <button class="panel-close" onclick="closePanels()">
                     <i class="fa-solid fa-xmark"></i>
@@ -69,8 +132,7 @@
 
             <!-- OVERLAY -->
             <div id="overlay" class="overlay" onclick="closePanels()"></div>
-
-        </div>
+        </main>
     </div>
 
     <script src="js/config.js"></script>
