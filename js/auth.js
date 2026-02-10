@@ -28,6 +28,12 @@ function doRegister() {
     let login = document.getElementById("regLogin").value;
     let pass = document.getElementById("regPass").value;
 
+    //password rule min 6 characters
+    if (pass.length < 6) {
+        showMessage("Password must be at least 6 characters");
+        return;
+    }
+
     let payload = JSON.stringify({
         firstName: first,
         lastName: last,
