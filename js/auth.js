@@ -11,14 +11,16 @@ function doLogin() {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.error) {
+        if (data.error && data.error.length > 0) {
             showMessage(data.error);
+            
         } else {
             localStorage.setItem("userId", data.id);
             localStorage.setItem("firstName", data.firstName);
             window.location.href = "contacts.html";
         }
     });
+
 }
 
 function doRegister() {
@@ -26,6 +28,12 @@ function doRegister() {
     let last = document.getElementById("regLast").value;
     let login = document.getElementById("regLogin").value;
     let pass = document.getElementById("regPass").value;
+
+    //password rule min 6 characters
+    if (pass.length < 6) {
+        showMessage("Password must be at least 6 characters");
+        return;
+    }
 
     let payload = JSON.stringify({
         firstName: first,
