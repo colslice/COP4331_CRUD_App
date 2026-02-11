@@ -2,8 +2,8 @@
 
 $inData = getRequestInfo();
 
-// $conn = new mysqli("localhost", "project_user", "COP4331", "COP4331");
-$conn = new mysqli("localhost", "root", "", "cop4331");
+$conn = new mysqli("localhost", "project_user", "COP4331", "COP4331");
+// $conn = new mysqli("localhost", "root", "", "cop4331");
 
 if ($conn->connect_error) {
     returnWithError($conn->connect_error);
