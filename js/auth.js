@@ -11,8 +11,9 @@ function doLogin() {
     })
     .then(res => res.json())
     .then(data => {
-        if (data.error) {
+        if (data.error && data.error.length > 0) {
             showMessage(data.error);
+            
         } else {
             localStorage.setItem("userId", data.id);
             localStorage.setItem("firstName", data.firstName);

@@ -1,5 +1,7 @@
 let contacts = [];
 let activeContact = null;
+let showFavoritesOnly = false;
+
 
 /* =========================
    INIT
@@ -52,6 +54,7 @@ function searchContacts() {
         .then((res) => res.json())
         .then((data) => {
             contacts = data.results || [];
+            contacts.sort((a, b) => b.favorite - a.favorite);
             renderContacts();
             updateCount();
         });
@@ -69,8 +72,11 @@ function updateCount() {
 function renderContacts() {
     const grid = document.getElementById("contactGrid");
     grid.innerHTML = "";
+    const list = showFavoritesOnly
+        ? contacts.filter(c => Number(c.favorite) === 1)
+        : contacts;
 
-    contacts.forEach((c) => {
+    list.forEach((c) => {
         const card = document.createElement("div");
         card.className = "contact-card";
 
@@ -78,43 +84,65 @@ function renderContacts() {
             (c.firstName?.[0] || "") + (c.lastName?.[0] || "");
 
         card.innerHTML = `
-      <div class="card-accent"></div>
+  <div class="card-accent"></div>
 
-      <div class="card-top">
-        <div class="card-avatar">${initials}</div>
+  <div class="card-top">
 
-        <div class="menu-wrap">
-          <button class="card-icon-btn" onclick="toggleMenu(event, ${c.id})">
-            <i class="fa-solid fa-ellipsis"></i>
+    <div class="card-left">
+      <div class="card-avatar">${initials}</div>
+
+      <div class="card-name-inline">
+        ${c.firstName} ${c.lastName}
+      </div>
+    </div>
+
+    <div class="card-actions">
+
+    <button class="fav-btn ${c.favorite == 1 ? "active" : ""}"
+            onclick="toggleFavorite(event, ${c.id})">
+
+        <svg xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            class="fav-icon">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+        </svg>
+
+    </button>
+
+
+      <div class="menu-wrap">
+        <button class="card-icon-btn" onclick="toggleMenu(event, ${c.id})">
+          <i class="fa-solid fa-ellipsis"></i>
+        </button>
+
+        <div class="menu" id="menu-${c.id}">
+          <button class="menu-item" onclick="menuEdit(event, ${c.id})">
+            <i class="fa-solid fa-pen"></i> Edit
           </button>
-
-          <div class="menu" id="menu-${c.id}">
-            <button class="menu-item" onclick="menuEdit(event, ${c.id})">
-              <i class="fa-solid fa-pen"></i> Edit
-            </button>
-            <button class="menu-item danger" onclick="menuDelete(event, ${c.id})">
-              <i class="fa-solid fa-trash"></i> Delete
-            </button>
-          </div>
+          <button class="menu-item danger" onclick="menuDelete(event, ${c.id})">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
         </div>
       </div>
 
-      <div class="card-name">
-        <div class="card-first">${c.firstName}</div>
-        <div class="card-last">${c.lastName}</div>
-      </div>
+    </div>
 
-      <div class="card-info-box">
-        <div class="info-row">
-          <i class="fa-solid fa-phone"></i>
-          ${formatPhone(c.phone)}
-        </div>
-        <div class="info-row">
-          <i class="fa-solid fa-envelope"></i>
-          ${c.email}
-        </div>
-      </div>
-    `;
+  </div>
+
+  <div class="card-info-box">
+    <div class="info-row">
+        <i class="fa-solid fa-phone copy-icon" onclick="copyText('${c.phone}')"></i>
+        ${formatPhone(c.phone)}
+    </div>
+
+    <div class="info-row">
+        <i class="fa-solid fa-envelope copy-icon" onclick="copyText('${c.email}')"></i>
+        ${c.email}
+    </div>
+
+  </div>
+`;
+
 
         grid.appendChild(card);
     });
@@ -231,6 +259,26 @@ function deleteContact() {
     });
 }
 
+function toggleFavorite(e, id) {
+    e.stopPropagation();
+
+    fetch(API_BASE + "ToggleFavorite.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            contactId: id,
+            userId: localStorage.getItem("userId")
+        })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (!data.error) {
+                searchContacts(); // refresh list
+            }
+        });
+}
+
+
 /* =========================
    UI HELPERS
 ========================= */
@@ -284,3 +332,48 @@ function resetAddForm() {
     addEmail.value = "";
     updatePreview();
 }
+
+function copyText(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            showMessage("Copied to clipboard!");
+        })
+        .catch(() => {
+            showMessage("Failed to copy.");
+        });
+}
+
+function updateCount() {
+    const el = document.getElementById("contactsCount");
+    if (!el) return;
+
+    const visible = showFavoritesOnly
+        ? contacts.filter(c => Number(c.favorite) === 1).length
+        : contacts.length;
+
+    el.textContent = `${visible} of ${contacts.length} contacts`;
+}
+
+function showAllContacts() {
+    showFavoritesOnly = false;
+
+    document.getElementById("homeBtn").classList.add("active");
+    document.getElementById("favBtn").classList.remove("active");
+
+    renderContacts();
+    updateCount();
+}
+
+function showFavoriteContacts() {
+    showFavoritesOnly = true;
+
+    document.getElementById("favBtn").classList.add("active");
+    document.getElementById("homeBtn").classList.remove("active");
+
+    renderContacts();
+    updateCount();
+}
+
+
+
+
