@@ -193,10 +193,10 @@ function openEditPanel() {
     const content = document.getElementById("viewPanelContent");
 
     content.innerHTML = `
-    <input id="editFirst" value="${c.firstName}">
-    <input id="editLast" value="${c.lastName}">
-    <input id="editPhone" value="${c.phone}">
-    <input id="editEmail" value="${c.email}">
+    <input id="editFirst" placeholder="First Name" value="${c.firstName}">
+    <input id="editLast" placeholder="Last Name" value="${c.lastName}">
+    <input id="editPhone" placeholder="Phone" value="${c.phone}">
+    <input id="editEmail" placeholder="Email" value="${c.email}">
     <div class="button-row">
       <button onclick="saveEdit()">Save</button>
       <button class="secondary" onclick="closePanels()">Cancel</button>
