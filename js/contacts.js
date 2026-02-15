@@ -131,16 +131,17 @@ function renderContacts() {
 
   <div class="card-info-box">
     <div class="info-row">
-        <i class="fa-solid fa-phone copy-icon" onclick="copyText('${c.phone}')"></i>
+        <i class="fa-solid fa-phone copy-icon" onclick="copyText(event, '${c.phone}')"></i>
         ${formatPhone(c.phone)}
     </div>
 
     <div class="info-row">
-        <i class="fa-solid fa-envelope copy-icon" onclick="copyText('${c.email}')"></i>
+        <i class="fa-solid fa-envelope copy-icon" onclick="copyText(event, '${c.email}')"></i>
         ${c.email}
     </div>
-
   </div>
+  
+  <div class="card-toast" aria-live="polite"></div>
 `;
 
 
@@ -333,13 +334,33 @@ function resetAddForm() {
     updatePreview();
 }
 
-function copyText(text) {
+function copyText(e, text) {
+    e.stopPropagation();
     navigator.clipboard.writeText(text)
         .then(() => {
-            showMessage("Copied to clipboard!");
+            const card = e.target.closest(".contact-card");
+            if (!card) {
+                return;
+            }
+            const toast = card.querySelector(".card-toast");
+            if (!toast) {
+                return;
+            }
+            toast.innerText = "Copied to clipboard!";
+            toast.classList.add("show");
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove("show"), 900);
         })
         .catch(() => {
-            showMessage("Failed to copy.");
+            const card = e.target.closest(".contact-card");
+            const toast = card?.querySelector(".card-toast");
+            if (!toast) {
+                return;
+            }
+            toast.innerText = "Failed to copy.";
+            toast.classList.add("show");
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove("show"), 1200);
         });
 }
 
