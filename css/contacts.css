@@ -438,8 +438,17 @@ html[data-theme="dark"] .search-input::placeholder {
     stroke-width: 1.0;
 }
 
-/* ACTIVE (favorited) */
-.fav-btn.active .fav-icon {
+/* favorite bookmark*/
+
+/* default */
+.fav-icon path {
+    fill: none;
+    stroke: var(--icon);
+    stroke-width: 2;
+}
+
+/* only fill when active */
+.fav-btn.active .fav-icon path {
     fill: rgb(255, 208, 53);
     stroke: rgb(255, 208, 53);
 }
