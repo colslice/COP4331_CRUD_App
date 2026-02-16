@@ -98,15 +98,12 @@ function renderContacts() {
 
     <div class="card-actions">
 
-    <button class="fav-btn ${c.favorite == 1 ? "active" : ""}"
+    <button class="fav-btn ${Number(c.favorite) === 1 ? "active" : ""}"
             onclick="toggleFavorite(event, ${c.id})">
 
-        <svg xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 16 16"
-            class="fav-icon">
-            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
-        </svg>
-
+      <svg class="fav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 7.8C5 6.11984 5 5.27976 5.32698 4.63803C5.6146 4.07354 6.07354 3.6146 6.63803 3.32698C7.27976 3 8.11984 3 9.8 3H14.2C15.8802 3 16.7202 3 17.362 3.32698C17.9265 3.6146 18.3854 4.07354 18.673 4.63803C19 5.27976 19 6.11984 19 7.8V21L12 17L5 21V7.8Z"/>
+      </svg>
     </button>
 
 
@@ -131,16 +128,17 @@ function renderContacts() {
 
   <div class="card-info-box">
     <div class="info-row">
-        <i class="fa-solid fa-phone copy-icon" onclick="copyText('${c.phone}')"></i>
+        <i class="fa-solid fa-phone copy-icon" onclick="copyText(event, '${c.phone}')"></i>
         ${formatPhone(c.phone)}
     </div>
 
     <div class="info-row">
-        <i class="fa-solid fa-envelope copy-icon" onclick="copyText('${c.email}')"></i>
+        <i class="fa-solid fa-envelope copy-icon" onclick="copyText(event, '${c.email}')"></i>
         ${c.email}
     </div>
-
   </div>
+  
+  <div class="card-toast" aria-live="polite"></div>
 `;
 
 
@@ -193,10 +191,10 @@ function openEditPanel() {
     const content = document.getElementById("viewPanelContent");
 
     content.innerHTML = `
-    <input id="editFirst" value="${c.firstName}">
-    <input id="editLast" value="${c.lastName}">
-    <input id="editPhone" value="${c.phone}">
-    <input id="editEmail" value="${c.email}">
+    <input id="editFirst" placeholder="First Name" value="${c.firstName}">
+    <input id="editLast" placeholder="Last Name" value="${c.lastName}">
+    <input id="editPhone" placeholder="Phone" value="${c.phone}">
+    <input id="editEmail" placeholder="Email" value="${c.email}">
     <div class="button-row">
       <button onclick="saveEdit()">Save</button>
       <button class="secondary" onclick="closePanels()">Cancel</button>
@@ -333,13 +331,33 @@ function resetAddForm() {
     updatePreview();
 }
 
-function copyText(text) {
+function copyText(e, text) {
+    e.stopPropagation();
     navigator.clipboard.writeText(text)
         .then(() => {
-            showMessage("Copied to clipboard!");
+            const card = e.target.closest(".contact-card");
+            if (!card) {
+                return;
+            }
+            const toast = card.querySelector(".card-toast");
+            if (!toast) {
+                return;
+            }
+            toast.innerText = "Copied to clipboard!";
+            toast.classList.add("show");
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove("show"), 900);
         })
         .catch(() => {
-            showMessage("Failed to copy.");
+            const card = e.target.closest(".contact-card");
+            const toast = card?.querySelector(".card-toast");
+            if (!toast) {
+                return;
+            }
+            toast.innerText = "Failed to copy.";
+            toast.classList.add("show");
+            clearTimeout(toast._t);
+            toast._t = setTimeout(() => toast.classList.remove("show"), 1200);
         });
 }
 
