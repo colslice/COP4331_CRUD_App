@@ -98,18 +98,29 @@ function renderContacts() {
 
     <div class="card-actions">
 
-    <button class="fav-btn ${Number(c.favorite) === 1 ? "active" : ""}"
-            onclick="toggleFavorite(event, ${c.id})">
-
-      <svg class="fav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <button
+      class="fav-btn ${Number(c.favorite) === 1 ? "active" : ""}"
+      type="button"
+      aria-label="${Number(c.favorite) === 1 ? "Remove from favorites" : "Add to favorites"}"
+      onclick="toggleFavorite(event, ${c.id})"
+    >
+      <svg class="fav-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
         <path d="M5 7.8C5 6.11984 5 5.27976 5.32698 4.63803C5.6146 4.07354 6.07354 3.6146 6.63803 3.32698C7.27976 3 8.11984 3 9.8 3H14.2C15.8802 3 16.7202 3 17.362 3.32698C17.9265 3.6146 18.3854 4.07354 18.673 4.63803C19 5.27976 19 6.11984 19 7.8V21L12 17L5 21V7.8Z"/>
       </svg>
     </button>
 
 
       <div class="menu-wrap">
-        <button class="card-icon-btn" onclick="toggleMenu(event, ${c.id})">
-          <i class="fa-solid fa-ellipsis"></i>
+        <button
+          class="card-icon-btn"
+          type="button"
+          aria-label="Open contact actions menu"
+          aria-haspopup="menu"
+          aria-controls="menu-${c.id}"
+          aria-expanded="false"
+          onclick="toggleMenu(event, ${c.id})"
+        >
+          <i class="fa-solid fa-ellipsis" aria-hidden="true"></i>
         </button>
 
         <div class="menu" id="menu-${c.id}">
