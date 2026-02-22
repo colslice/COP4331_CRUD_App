@@ -604,6 +604,7 @@ html[data-theme="dark"] .search-input::placeholder {
     background: #000;
     color: #fff;
     font-weight: 700;
+    flex-shrink: 0;
 }
 
 #previewTile .contact-info {
